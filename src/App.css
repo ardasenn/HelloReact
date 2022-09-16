@@ -1,38 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root{
+  --myBlack:rgb(33, 33, 33);
+  --myGray:rgb(50, 50, 50);
+  --myCyan:rgb(13, 115, 119);
+  --myBlue:rgb(20, 255, 236);
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body{
+  background-color: var(--myGray);
+  font-family: 'Roboto Mono', monospace;
+}
+.student-form {
+  background-color: var(--myCyan);
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  gap:1rem;
+  width: 30vw;
+  margin: 5rem auto;
+  padding: 1rem;
 
-.App-link {
-  color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.student-form > input{
+  border-radius: 5px;
+  height: 2rem;
+  width: 60%;
+  
+}
+.add-btn{
+  background-color: var(--myBlack);
+  width: 8rem;
+  height: 2rem;
+  border-radius: 1rem;
+  color: aliceblue;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.add-btn:hover{
+  scale: 1.2;
+}
+.student-card{
+  background-color: var(--myBlue);
+  border-radius: 3rem;
+  margin: 1rem;
+  padding: 2rem;
+  width: 350px;
+  display: inline-block;
+  
+}
+.student-card  p{
+ color: var(--myBlack);
+ font-weight: 700;
+ font-family: 'Times New Roman', Times, serif;
+ display: inline-block;
+ margin: 0 1rem;
+}
+.student-card  span{
+  display: inline-block;
+  color: var(--myGray);
+}
+.student-card .card-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px dotted var(--myBlack);
+}
+.student-list {
+  background-color: var(--myBlack);
+  border-radius: 5px;
+  margin: 20px auto;
+  padding: 2rem;
+  width: 80%;
+}
+.student-list >h3{
+  font-size:40px ;
 }
