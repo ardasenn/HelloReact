@@ -1,29 +1,23 @@
 import { useState } from "react";
-import "./App.css";
+import "./App.scss";
 
 function App() {
-  const [studentName, setStudentName] = useState("Berk");
-  const [studentLastName, setStudentLastName] = useState("Basdemir");
-  const [studentAge, setStudentAge] = useState("30");
-  const [studentInstructor, setStudentInstructor] = useState("Orkun Durmaz");
+  const [student, setStudent] = useState({name:"",lastName:"",age:"",instructor:""});
+  const [studentValidator, setStudentValidator] = useState({name:true,lastName:true,age:true,instructor:true});
   const [studentList, setStudentList] = useState([]);
 
   const handleClickAddButton = (e) => {
     e.preventDefault();
-    // const student = {
-    //   name: studentName,
-    //   lastname: studentLastName,
-    //   age: studentAge,
-    //   instructor: studentInstructor,
-    // };
-    setStudentList((prevStudentList) => [
-      ...prevStudentList,
-      { studentName, studentLastName, studentAge, studentInstructor },
-    ]);
-    setStudentName(""); //value'ye bağlamazsan bu çaışmaz
-    setStudentLastName("");
-    setStudentAge("");
-    setStudentInstructor("");
+    setStudentValidator({...student});
+   
+    if(Object.values(student).every(value=>value)){
+      setStudentList(prevStudentList=>[...prevStudentList,student])
+      
+      const _student={...student}
+      
+     Object.keys(_student).forEach(key=>_student[key]="")
+      setStudent(_student)
+    }    
   };
 
   return (
@@ -31,33 +25,38 @@ function App() {
       <form className="student-form" action="">
         <h1>New Student</h1>
         <input
-          onChange={(e) => setStudentName(e.target.value)}
+          onChange={e=>setStudent(prevStudent=>({...prevStudent,name:e.target.value}))}
           className="first-name"
           type="text"
           placeholder="First Name"
-          value={studentName}
+          value={student.name}
         />
+        {!studentValidator.name && <span>Name cant be empty</span>}
+
         <input
-          onChange={(e) => setStudentLastName(e.target.value)}
+          onChange={e=>setStudent(prevStudent=>({...prevStudent,lastName:e.target.value}))}
           className="last-name"
           type="text"
           placeholder="Last Name"
-          value={studentLastName}
+          value={student.lastName}
         />
+        {!studentValidator.lastName && <span>LastName cant be empty</span> }
         <input
-          onChange={(e) => setStudentAge(e.target.value)}
+          onChange={e=>setStudent(prevStudent=>({...prevStudent,age:e.target.value}))}
           className="age"
-          type="text"
+          type="number"
           placeholder="Age"
-          value={studentAge}
+          value={student.age}
         />
+        {!studentValidator.age && <span>age cant be empty</span> }
         <input
-          onChange={(e) => setStudentInstructor(e.target.value)}
+          onChange={e=>setStudent(prevStudent=>({...prevStudent,instructor:e.target.value}))}
           className="instructor"
           type="text"
           placeholder="Instructor"
-          value={studentInstructor}
+          value={student.instructor}
         />
+        {!studentValidator.instructor && <span>instructor cant be empty</span>}
 
         <button onClick={handleClickAddButton} className="add-btn">
           Add
@@ -71,19 +70,19 @@ function App() {
               <div className="student-card">
                 <div className="card-row">
                   <span>Name</span>
-                  <p>{student.studentName}</p>
+                  <p>{student.name}</p>
                 </div>
                 <div className="card-row">
                   <span>LastName</span>
-                  <p>{student.studentLastName}</p>
+                  <p>{student.lastName}</p>
                 </div>
                 <div className="card-row">
                   <span>Age</span>
-                  <p>{student.studentAge}</p>
+                  <p>{student.age}</p>
                 </div>
                 <div className="card-row">
                   <span>Instructor</span>
-                  <p>{student.studentInstructor}</p>
+                  <p>{student.instructor}</p>
                 </div>
               </div>
             );
