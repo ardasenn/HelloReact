@@ -7,6 +7,22 @@ $myBlue: rgb(20, 255, 236);
 
 .App {
   text-align: center;
+  .loading {
+    color: aliceblue;
+    font-size: 5rem;
+    animation: continues-rotation 1s infinite linear;
+  }
+}
+@keyframes continues-rotation {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(310deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 * {
   box-sizing: border-box;
@@ -36,6 +52,7 @@ body {
     border-radius: 50px;
     height: 2rem;
     width: 50%;
+    padding: 1rem;
     transition: 0.2s ease-in-out;
     &:hover {
       border: 1px solid red;
@@ -66,6 +83,18 @@ body {
   margin: 20px auto;
   padding: 2rem;
   width: 50%;
+  position: relative;
+  .btn-search {
+    text-align: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    outline: none;
+    background: aliceblue;
+    border: 3px solid $myBlue;
+    border-radius: 10px;
+    height: 2rem;
+  }
   > h3 {
     font-size: 40px;
     color: aliceblue;
@@ -77,6 +106,17 @@ body {
     padding: 2rem;
     width: 350px;
     display: inline-block;
+    position: relative;
+    .btn {
+      background: $myBlue;
+      border: none;
+      color: $myBlack;
+      position: absolute;
+      top: 5px;
+      right: 40px;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
     p {
       color: $myBlack;
       font-weight: 700;

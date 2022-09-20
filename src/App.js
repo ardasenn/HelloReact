@@ -1,94 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.scss";
+import axios from "axios";
+import StudentForm from "./components/student/studentForm/StudentForm";
+import StudentList from "./components/student/studentList/StudentList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
-  const [student, setStudent] = useState({name:"",lastName:"",age:"",instructor:""});
-  const [studentValidator, setStudentValidator] = useState({name:true,lastName:true,age:true,instructor:true});
+  const [student, setStudent] = useState({
+    name: "",
+    lastName: "",
+    age: "",
+    instructor: "",
+  });
+  const [studentValidator, setStudentValidator] = useState({
+    name: true,
+    lastName: true,
+    age: true,
+    instructor: true,
+  });
   const [studentList, setStudentList] = useState([]);
+  // const [isRefreshPage,setIsRefreshPage]=useState(false);
+  useEffect(() => {
+    const getStudentsFromApi = async () => {
+      const response = await axios.get("http://localhost:5000/students");
+      setStudentList(response.data);
+    };
+    getStudentsFromApi();
+  }, []);
 
-  const handleClickAddButton = (e) => {
+  const handleClickAddButton = async (e) => {
     e.preventDefault();
-    setStudentValidator({...student});
-   
-    if(Object.values(student).every(value=>value)){
-      setStudentList(prevStudentList=>[...prevStudentList,student])
-      
-      const _student={...student}
-      
-     Object.keys(_student).forEach(key=>_student[key]="")
-      setStudent(_student)
-    }    
-  };
+    setStudentValidator({ ...student });
 
+    if (Object.values(student).every((value) => value)) {
+      setStudentList((prevStudentList) => [
+        ...prevStudentList,
+        { id: `${Math.trunc(Math.random() * 1000)}`, ...student },
+      ]);
+       
+      // const createStudent= await axios.post("http://localhost:5000/students"+"/")
+      const _student = { ...student };
+
+      Object.keys(_student).forEach((key) => (_student[key] = ""));
+      setStudent(_student);
+    }
+  };
+  const handleClickDeleteButton = (id) => {
+    setStudentList((before) => before.filter((obj) => obj.id !== id));
+  };
   return (
     <div className="App">
-      <form className="student-form" action="">
-        <h1>New Student</h1>
-        <input
-          onChange={e=>setStudent(prevStudent=>({...prevStudent,name:e.target.value}))}
-          className="first-name"
-          type="text"
-          placeholder="First Name"
-          value={student.name}
+      <StudentForm
+        setStudent={setStudent}
+        studentValidator={studentValidator}
+        handleClickAddButton={handleClickAddButton}
+        student={student}
+      />
+      {studentList.length ? (
+        <StudentList
+          studentList={studentList}
+          handleClickDeleteButton={handleClickDeleteButton}
         />
-        {!studentValidator.name && <span>Name cant be empty</span>}
-
-        <input
-          onChange={e=>setStudent(prevStudent=>({...prevStudent,lastName:e.target.value}))}
-          className="last-name"
-          type="text"
-          placeholder="Last Name"
-          value={student.lastName}
-        />
-        {!studentValidator.lastName && <span>LastName cant be empty</span> }
-        <input
-          onChange={e=>setStudent(prevStudent=>({...prevStudent,age:e.target.value}))}
-          className="age"
-          type="number"
-          placeholder="Age"
-          value={student.age}
-        />
-        {!studentValidator.age && <span>age cant be empty</span> }
-        <input
-          onChange={e=>setStudent(prevStudent=>({...prevStudent,instructor:e.target.value}))}
-          className="instructor"
-          type="text"
-          placeholder="Instructor"
-          value={student.instructor}
-        />
-        {!studentValidator.instructor && <span>instructor cant be empty</span>}
-
-        <button onClick={handleClickAddButton} className="add-btn">
-          Add
-        </button>
-      </form>
-      <div className="student-list">
-        <h3>Student List</h3>
-        <div className="student-container">
-          {studentList.map((student) => {
-            return (
-              <div className="student-card">
-                <div className="card-row">
-                  <span>Name</span>
-                  <p>{student.name}</p>
-                </div>
-                <div className="card-row">
-                  <span>LastName</span>
-                  <p>{student.lastName}</p>
-                </div>
-                <div className="card-row">
-                  <span>Age</span>
-                  <p>{student.age}</p>
-                </div>
-                <div className="card-row">
-                  <span>Instructor</span>
-                  <p>{student.instructor}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      ) : (
+        <FontAwesomeIcon className="loading" icon={faSpinner} />
+      )}
     </div>
   );
 }

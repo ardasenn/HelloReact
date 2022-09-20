@@ -1,0 +1,63 @@
+{
+
+    "students": [
+  
+      {
+  
+        "id": "1",
+  
+        "name": "Hakan Gultekin",
+  
+        "course": "BA Booster",
+  
+        "instructor": "Orkun Durmaz",
+  
+        "score": "100"
+  
+      },
+  
+      {
+  
+        "id": "2",
+  
+        "name": "Rober Yildiz",
+  
+        "course": "BA Booster",
+  
+        "instructor": "Orkun Durmaz",
+  
+        "score": "100"
+  
+      },
+  
+      {
+  
+        "id": "3",
+  
+        "name": "Erdinc Dincer",
+  
+        "course": "BA Booster",
+  
+        "instructor": "Orkun Durmaz",
+  
+        "score": "100"
+  
+      },
+  
+      {
+  
+        "id": "4",
+  
+        "name": "Berk Basdemir",
+  
+        "course": "BA Booster",
+  
+        "instructor": "Orkun Durmaz",
+  
+        "score": "100"
+  
+      }
+  
+    ]
+  
+  }
